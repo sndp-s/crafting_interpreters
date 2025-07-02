@@ -1,0 +1,19 @@
+# Ignore Java class files
+*.class
+
+# VS Code settings
+.vscode/
+
+# macOS system files
+.DS_Store
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Backup files
+*~
+
+# Java crash logs
+hs_err_pid*
+
