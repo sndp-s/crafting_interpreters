@@ -71,6 +71,23 @@ class Scanner {
     addToken(STRING, value);
   }
 
+  // TODO: Support nesting.
+  private void blockComment() {
+    while (!isAtEnd()) {
+      if (peek() == '*' && peekNext() == '/') {
+        advance(); // consume '*'
+        advance(); // consume '/'
+        return;
+      } else if (peek() == '\n') {
+        line++;
+      }
+      advance();
+    }
+
+    // If we got here, we hit the end of the file without closing the comment.
+    Lox.error(line, "Unterminated block comment.");
+  }
+
   private boolean match(char expected) {
     if (isAtEnd())
       return false;
@@ -157,6 +174,8 @@ class Scanner {
         // A comment goes until the end of the line.
         while (peek() != '\n' && !isAtEnd())
           advance();
+      } else if (match('*')) {
+        blockComment();
       } else {
         addToken(SLASH);
       }
